@@ -4,11 +4,21 @@ A TypeScript/JavaScript library for integrating Iaptic's payments and subscripti
 
 ## Installation 
 
+### NPM (recommended)
 ```bash
 npm install --save iaptic-js
+```
 
-# optional typescript types
-npm install --save-dev @types/iaptic-js
+### CDN
+Add the script directly to your HTML:
+```html
+<!-- UMD version (for direct browser use) -->
+<script src="https://cdn.jsdelivr.net/npm/iaptic-js@1.0.1/dist/iaptic-js.js"></script>
+
+<!-- OR: ES Module version (for modern browsers) -->
+<script type="module">
+  import { IapticJS } from 'https://cdn.jsdelivr.net/npm/iaptic-js@1.0.1/dist/iaptic-js.esm.js';
+</script>
 ```
 
 ## Usage
