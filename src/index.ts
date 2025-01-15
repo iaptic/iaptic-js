@@ -16,5 +16,3 @@ export function createAdapter(config: Config) {
 export const IapticJS = {
     createAdapter,
 };
-
-export default IapticJS;
