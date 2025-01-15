@@ -1,6 +1,6 @@
 {
   "name": "iaptic-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Iaptic JS integration library for the browser",
   "main": "dist/iaptic-js.js",
   "module": "dist/iaptic-js.esm.js",
@@ -54,7 +54,10 @@
     "preset": "ts-jest",
     "testEnvironment": "jsdom",
     "testEnvironmentOptions": {
-      "customExportConditions": ["node", "node-addons"]
+      "customExportConditions": [
+        "node",
+        "node-addons"
+      ]
     },
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1"
@@ -63,9 +66,21 @@
       "<rootDir>/src/__tests__/setup.ts"
     ],
     "transform": {
-      "^.+\\.tsx?$": ["ts-jest", { "tsconfig": "tsconfig.json" }]
+      "^.+\\.tsx?$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.json"
+        }
+      ]
     },
     "testRegex": "(/__tests__/.*\\.(test|spec))\\.[tj]sx?$",
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   }
-} 
+}
