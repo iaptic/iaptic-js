@@ -16,3 +16,11 @@ export function createAdapter(config: Config) {
 export const IapticJS = {
     createAdapter,
 };
+
+// Set global for browser environments
+if (typeof window !== 'undefined') {
+    window.IapticJS = {
+        createAdapter,
+        IapticStripe
+    };
+}

@@ -15,6 +15,16 @@ Add the script directly to your HTML:
 <!-- UMD version (for direct browser use) -->
 <script src="https://cdn.jsdelivr.net/npm/iaptic-js@1.0.1/dist/iaptic-js.js"></script>
 
+<!-- The library will be available as window.IapticJS -->
+<script>
+  const iapticStripe = window.IapticJS.createAdapter({
+    type: 'stripe',
+    appName: 'my-app',
+    apiKey: '1234567890',
+    stripePublicKey: 'pk_test_1234567890'
+  });
+</script>
+
 <!-- OR: ES Module version (for modern browsers) -->
 <script type="module">
   import { IapticJS } from 'https://cdn.jsdelivr.net/npm/iaptic-js@1.0.1/dist/iaptic-js.esm.js';

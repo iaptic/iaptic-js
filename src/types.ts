@@ -135,3 +135,12 @@ export interface Config {
     /** Optional custom Iaptic URL (for using private iaptic deployments) */
     customIapticUrl?: string;
 }
+
+declare global {
+    interface Window {
+        IapticJS: {
+            createAdapter: typeof import('./index').createAdapter;
+            IapticStripe: typeof import('./iaptic-stripe').IapticStripe;
+        };
+    }
+}
