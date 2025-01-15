@@ -5,14 +5,19 @@
   "main": "dist/iaptic-js.js",
   "module": "dist/iaptic-js.esm.js",
   "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/iaptic-js.esm.js",
+      "require": "./dist/iaptic-js.js"
+    }
+  },
   "files": [
     "dist",
-    "src",
-    "dist/iaptic.bundled.ts"
+    "src"
   ],
   "scripts": {
     "build": "rollup -c",
-    "build:dts": "rollup -c rollup.dts.config.js",
     "test": "jest --passWithNoTests",
     "lint": "eslint src --ext .ts",
     "docs": "typedoc src/index.ts",

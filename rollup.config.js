@@ -10,18 +10,27 @@ module.exports = {
       name: 'IapticJS',
       globals: {
         '@stripe/stripe-js': 'Stripe'
-      }
+      },
+      sourcemap: true
     },
     {
       file: pkg.module,
-      format: 'es'
+      format: 'es',
+      sourcemap: true
     }
   ],
   external: [...Object.keys(pkg.peerDependencies || {})],
   plugins: [
     typescript({
       typescript: require('typescript'),
-      useTsconfigDeclarationDir: true
+      useTsconfigDeclarationDir: true,
+      clean: true,
+      tsconfigOverride: {
+        compilerOptions: {
+          sourceMap: true,
+          declarationMap: true
+        }
+      }
     })
   ]
 }; 
