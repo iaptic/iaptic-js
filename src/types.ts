@@ -139,8 +139,10 @@ export interface Config {
 declare global {
     interface Window {
         IapticJS: {
+            version: string;
             createAdapter: typeof import('./index').createAdapter;
             IapticStripe: typeof import('./iaptic-stripe').IapticStripe;
+            Utils: typeof import('./utils').Utils;
         };
     }
 }

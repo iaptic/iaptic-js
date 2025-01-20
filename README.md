@@ -13,7 +13,7 @@ npm install --save iaptic-js
 Add the script directly to your HTML:
 ```html
 <!-- UMD version (for direct browser use) -->
-<script src="https://cdn.jsdelivr.net/npm/iaptic-js@1.0.1/dist/iaptic-js.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/iaptic-js@1.0.3/dist/iaptic-js.js"></script>
 
 <!-- The library will be available as window.IapticJS -->
 <script>
@@ -27,7 +27,7 @@ Add the script directly to your HTML:
 
 <!-- OR: ES Module version (for modern browsers) -->
 <script type="module">
-  import { IapticJS } from 'https://cdn.jsdelivr.net/npm/iaptic-js@1.0.1/dist/iaptic-js.esm.js';
+  import { IapticJS } from 'https://cdn.jsdelivr.net/npm/iaptic-js@1.0.3/dist/iaptic-js.esm.js';
 </script>
 ```
 

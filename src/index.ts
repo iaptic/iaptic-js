@@ -1,5 +1,6 @@
 import { IapticStripe } from './iaptic-stripe';
 import { Config } from './types';
+import { Utils } from './utils';
 
 export * from './iaptic-stripe';
 export * from './refresh-scheduler';
@@ -20,7 +21,9 @@ export const IapticJS = {
 // Set global for browser environments
 if (typeof window !== 'undefined') {
     window.IapticJS = {
+        version: '1.0.3',
         createAdapter,
-        IapticStripe
+        IapticStripe,
+        Utils
     };
 }
