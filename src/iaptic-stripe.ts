@@ -7,37 +7,74 @@ interface CachedProducts {
     fetchedAt: number;
 }
 
+/**
+ * Response from Iaptic's /stripe/products API
+ * @internal
+ */
 export interface GetProductsResponse {
+    /** Whether the request was successful */
     ok: boolean;
+    /** Array of available products */
     products: Product[];
 }
 
+/**
+ * Response from Iaptic's /stripe/checkout API
+ * @internal
+ */
 export interface PostCheckoutSessionResponse {
+    /** Whether the request was successful */
     ok: boolean;
+    /** Stripe Checkout URL where the customer will be redirected */
     url: string;
+    /** Access token for the customer */
     accessToken: string;
 }
 
+/**
+ * Response from Iaptic's /stripe/purchases API
+ * @internal
+ */
 export interface GetPurchasesResponse {
+    /** Whether the request was successful */
     ok: boolean;
+    /** Array of customer's purchases */
     purchases: Purchase[];
+    /** Optional new access token */
     newAccessToken?: string;
 }
 
+/**
+ * Response from Iaptic's /stripe/change-plan API
+ * @internal
+ */
 export interface ChangePlanResponse {
+    /** Whether the request was successful */
     ok: boolean;
+    /** Updated purchase details */
     purchase: Purchase;
+    /** Optional new access token */
     newAccessToken?: string;
 }
 
+/**
+ * Main class for interacting with Iaptic's Stripe integration
+ * @remarks
+ * This class handles all Stripe-related operations including product listing,
+ * checkout sessions, and subscription management.
+ */
 export class IapticStripe {
-    static readonly VERSION = '1.0.0';
     
     private readonly iapticUrl: string;
     private readonly appName: string;
     private readonly apiKey: string;
     private readonly refreshScheduler: RefreshScheduler;
 
+    /**
+     * Creates a new IapticStripe instance
+     * @param config - Configuration options for the Stripe integration
+     * @throws Error if required configuration is missing
+     */
     constructor(config: Config) {
         if (config.type !== 'stripe') {
             throw new Error('Unsupported adapter type');
@@ -59,6 +96,12 @@ export class IapticStripe {
         return `Basic ${Utils.base64Encode(`${this.appName}:${this.apiKey}`)}`;
     }
 
+    /**
+     * Gets a list of available products and their pricing
+     * @returns Promise resolving to an array of products
+     * @remarks
+     * Results are cached locally. Use refreshProducts() to force a fresh fetch.
+     */
     async getProducts(): Promise<Product[]> {
         const cached = this._getCachedProducts();
         if (cached?.products) {
@@ -67,6 +110,10 @@ export class IapticStripe {
         return this.refreshProducts();
     }
 
+    /**
+     * Forces a refresh of the products list from the server
+     * @returns Promise resolving to an array of products
+     */
     async refreshProducts(): Promise<Product[]> {
         // Check if we have very recent cached data (less than 1 minute old)
         const cached = this._getCachedProducts();
@@ -99,10 +146,21 @@ export class IapticStripe {
         }
     }
 
+    /**
+     * Gets the current access token if one exists
+     * @returns The current access token or undefined if none exists
+     */
     getAccessToken(): string | undefined {
         return this._getStoredAccessToken();
     }
 
+    /**
+     * Creates a new order and redirects to Stripe Checkout
+     * @param params - Order parameters including product and URLs
+     * @throws Error if the checkout session creation fails
+     * @remarks
+     * This method will redirect the user to Stripe's checkout page on success
+     */
     async order(params: Order): Promise<void> {
         if (!params.accessToken) {
             params.accessToken = this._getStoredAccessToken();
@@ -143,12 +201,11 @@ export class IapticStripe {
     }
 
     /**
-     * Get purchases status.
-     * 
-     * By default, it will use the access token stored in the browser's localStorage. You can
-     * pass an optional access token to get the purchases for a specific user.
-     * 
-     * @param accessToken Optional access token for the user
+     * Gets the customer's purchase history
+     * @param accessToken - Optional access token (uses stored token if not provided)
+     * @returns Promise resolving to an array of purchases
+     * @remarks
+     * This method will automatically schedule refresh operations for active subscriptions
      */
     async getPurchases(accessToken?: string): Promise<Purchase[]> {
         if (!accessToken) {
@@ -201,6 +258,10 @@ export class IapticStripe {
         
     /**
      * Redirects to Stripe Customer Portal for subscription management
+     * @param params - Portal parameters including return URL
+     * @throws Error if portal session creation fails
+     * @remarks
+     * This method will redirect the user to Stripe's customer portal on success
      */
     async redirectToCustomerPortal(params: { returnUrl?: string, accessToken?: string }) {
         if (!params.accessToken) {
@@ -247,11 +308,11 @@ export class IapticStripe {
     }
 
     /**
-     * Changes the subscription plan
-     * 
-     * @param {PlanChange} planChange - Plan change request
-     * 
-     * @returns {Promise<Purchase>} Updated purchase details
+     * Changes a subscription plan
+     * @param planChange - Plan change parameters
+     * @returns Promise resolving to the updated purchase details
+     * @remarks
+     * This method handles immediate plan changes without requiring customer portal access
      */
     async changePlan(planChange: PlanChange) {
         if (!planChange.accessToken) {
@@ -310,6 +371,9 @@ export class IapticStripe {
     // Storage
     //
 
+    /**
+     * Clears all stored data including access tokens and cached products
+     */
     clearStoredData() {
         Utils.storageRemove('iaptic_access_token');
         Utils.storageRemove('iaptic_products');

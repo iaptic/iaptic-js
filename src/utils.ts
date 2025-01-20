@@ -1,11 +1,16 @@
 /**
  * Utility functions for the Iaptic library
+ * @internal
  */
 export class Utils {
 
     /**
-     * Base64 encode a string
-     * @param str String to encode
+     * Base64 encode a string with fallbacks for different environments
+     * @param str - String to encode
+     * @returns Base64 encoded string
+     * @remarks
+     * Handles non-ASCII characters and provides fallbacks for older browsers
+     * and Node.js environments
      */
     static base64Encode(str: string): string {
         try {
@@ -28,10 +33,10 @@ export class Utils {
     }
 
     /**
-     * Get item from localStorage with type safety
-     * 
-     * @param key Storage key
-     * @param defaultValue Default value if not found
+     * Get and parse a JSON item from localStorage
+     * @param key - Storage key
+     * @returns Parsed value or null if not found/invalid
+     * @internal
      */
     static storageGetJson<T>(key: string): T | null {
         try {
@@ -44,9 +49,10 @@ export class Utils {
     }
 
     /**
-     * Get item from localStorage as string
-     * 
-     * @param key Storage key
+     * Get a string item from localStorage
+     * @param key - Storage key
+     * @returns String value or null if not found
+     * @internal
      */
     static storageGetString(key: string): string | null {
         const value = localStorage.getItem(key);
@@ -54,10 +60,11 @@ export class Utils {
     }
 
     /**
-     * Set item in localStorage
-     * 
-     * @param key Storage key
-     * @param value Value to store
+     * Store a JSON-serializable value in localStorage
+     * @param key - Storage key
+     * @param value - Value to store
+     * @returns true if successful, false if storage failed
+     * @internal
      */
     static storageSetJson(key: string, value: any): boolean {
         try {
@@ -69,6 +76,13 @@ export class Utils {
         }
     }
 
+    /**
+     * Store a string value in localStorage
+     * @param key - Storage key
+     * @param value - String to store
+     * @returns true if successful, false if storage failed
+     * @internal
+     */
     static storageSetString(key: string, value: string): boolean {
         try {
             localStorage.setItem(key, value);
@@ -80,9 +94,10 @@ export class Utils {
     }
 
     /**
-     * Remove item from storage
-     * 
-     * @param key Storage key
+     * Remove an item from localStorage
+     * @param key - Storage key
+     * @returns true if successful, false if removal failed
+     * @internal
      */
     static storageRemove(key: string): boolean {
         try {
@@ -95,9 +110,13 @@ export class Utils {
     }
 
     /**
-     * Build URL with query parameters
-     * @param baseUrl Base URL
-     * @param params Query parameters
+     * Build a URL with query parameters
+     * @param baseUrl - Base URL without query parameters
+     * @param params - Object containing query parameters
+     * @returns Complete URL with encoded query parameters
+     * @remarks
+     * Handles URL encoding and removes undefined/null parameters
+     * @internal
      */
     static buildUrl(baseUrl: string, params: Record<string, string>): string {
         try {
@@ -134,7 +153,15 @@ export class Utils {
     }
 
     /**
-     * Format a price amount from micros
+     * Format a currency amount from micros with proper localization
+     * @param amountMicros - Amount in micros (1/1,000,000 of currency unit)
+     * @param currency - ISO 4217 currency code (e.g., 'USD', 'EUR')
+     * @returns Formatted currency string
+     * @example
+     * ```ts
+     * Utils.formatCurrency(1990000, 'USD') // Returns "$1.99"
+     * Utils.formatCurrency(1000000, 'EUR') // Returns "€1"
+     * ```
      */
     static formatCurrency(amountMicros: number, currency: string): string {
         if (typeof amountMicros !== 'number' || typeof currency !== 'string') {
@@ -194,9 +221,15 @@ export class Utils {
     }
 
     /**
-     * Format a ISO 8601 period in English
-     * 
-     * @param period ISO 8601 period
+     * Format an ISO 8601 period string into human-readable English
+     * @param period - ISO 8601 duration string
+     * @returns Human-readable period string
+     * @example
+     * ```ts
+     * Utils.formatBillingPeriodEN('P1M') // Returns "Monthly"
+     * Utils.formatBillingPeriodEN('P3M') // Returns "Every 3 months"
+     * Utils.formatBillingPeriodEN('P1Y') // Returns "Yearly"
+     * ```
      */
     static formatBillingPeriodEN(period: string): string {
         if (!period) return '';
