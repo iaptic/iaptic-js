@@ -1,6 +1,8 @@
 # Iaptic JS
 
-A TypeScript/JavaScript library for integrating Iaptic's payments and subscription service, using Stripe as a payment provider.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+A modern TypeScript/JavaScript library for seamless integration with Iaptic's payment and subscription services, powered by Stripe. Handle one-time purchases, subscriptions, and payment management with developer-friendly APIs.
 
 ## Installation 
 
@@ -10,56 +12,61 @@ npm install --save iaptic-js
 ```
 
 ### CDN
-Add the script directly to your HTML:
 ```html
 <!-- UMD version (for direct browser use) -->
 <script src="https://cdn.jsdelivr.net/npm/iaptic-js@1.0.3/dist/iaptic-js.js"></script>
 
-<!-- The library will be available as window.IapticJS -->
-<script>
-  const iapticStripe = window.IapticJS.createAdapter({
-    type: 'stripe',
-    appName: 'my-app',
-    apiKey: '1234567890',
-    stripePublicKey: 'pk_test_1234567890'
-  });
-</script>
-
-<!-- OR: ES Module version (for modern browsers) -->
+<!-- ES Module version (for modern browsers) -->
 <script type="module">
   import { IapticJS } from 'https://cdn.jsdelivr.net/npm/iaptic-js@1.0.3/dist/iaptic-js.esm.js';
 </script>
 ```
 
-## Usage
+## Features ✨
+- ✅ Stripe integration out-of-the-box
+- ✅ Type-safe TypeScript API
+- ✅ Unified interface for payments & subscriptions
+- ✅ Cross-platform support (Web, React Native, Node.js)
+- ✅ Automatic purchase verification
 
+## Quick Start 🚀
 ```ts
 import { IapticJS } from 'iaptic-js';
 
-const iapticStripe = IapticJS.createAdapter({
+// Initialize with your Stripe credentials
+const iaptic = IapticJS.createAdapter({
   type: 'stripe',
-  appName: 'my-app',
-  apiKey: '1234567890',
-  stripePublicKey: 'pk_test_1234567890',
+  appName: 'my-app',         // Your application identifier
+  apiKey: '1234567890',      // Get from Iaptic dashboard
+  stripePublicKey: 'pk_test_1234567890'
 });
 
-const products = await iapticStripe.getProducts();
-const purchases = await iapticStripe.getPurchases();
+// Fetch available products
+const { products, subscriptions } = await iaptic.getCatalog();
 
-async function buy() {
-  const purchase = await iapticStripe.order({
-    offerId: 'stripe:prod_1234567890', // cf offers in the products array
-    applicationUsername: '1234-5678-9012-3456',
-    successUrl: 'https://myapp.com/order-success',
-    cancelUrl: 'https://myapp.com/order-cancel',
-  });
+// Handle purchase flow
+async function purchaseProduct(productId: string) {
+  try {
+    const result = await iaptic.order({
+      offerId: productId,
+      applicationUsername: 'user-123',
+      successUrl: window.location.href + '/success',
+      cancelUrl: window.location.href + '/cancel'
+    });
+    
+    console.log('Purchase completed:', result);
+  } catch (error) {
+    console.error('Payment failed:', error);
+  }
 }
 ```
 
-## Documentation
-
-See the [API documentation](https://www.iaptic.com/documentation/iaptic-js) for more information.
+## Documentation 📚
+Explore our comprehensive guides:
+- [Official Documentation](https://iaptic.com/documentation/iaptic-js)
+- [API Reference](https://www.iaptic.com/documentation/api/iaptic-js)
+- [Getting Started Guide](https://www.iaptic.com/documentation/first-integration)
+- [Demo Project](https://github.com/iaptic/iaptic-js-demo)
 
 ## License
-
-MIT
+MIT © [Iaptic](https://www.iaptic.com)
