@@ -31,7 +31,6 @@ describe('IapticStripe', () => {
     beforeEach(() => {
         iaptic = new IapticStripe({
             type: 'stripe',
-            stripePublicKey: 'pk_test_123',
             appName: 'test-app',
             apiKey: 'test-key'
         });
@@ -40,19 +39,9 @@ describe('IapticStripe', () => {
     });
 
     describe('constructor', () => {
-        it('should throw if stripePublicKey is missing', () => {
-            expect(() => new IapticStripe({
-                type: 'stripe',
-                stripePublicKey: undefined as any,
-                appName: 'test',
-                apiKey: 'test'
-            })).toThrow('Missing required Stripe public key');
-        });
-
         it('should throw if appName is missing', () => {
             expect(() => new IapticStripe({
                 type: 'stripe',
-                stripePublicKey: 'pk_test_123',
                 appName: undefined as any,
                 apiKey: 'test'
             })).toThrow('Missing required Iaptic configuration');

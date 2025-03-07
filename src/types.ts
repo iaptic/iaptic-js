@@ -151,12 +151,6 @@ export interface Config {
      */
     type: 'stripe';
     /** 
-     * Stripe publishable key
-     * @remarks
-     * Can be found in your Stripe dashboard
-     */
-    stripePublicKey: string;
-    /** 
      * Your application name as configured on iaptic.com
      * @remarks
      * This must match exactly what you set up in the Iaptic dashboard

@@ -79,9 +79,6 @@ export class IapticStripe {
         if (config.type !== 'stripe') {
             throw new Error('Unsupported adapter type');
         }
-        if (!config.stripePublicKey) {
-            throw new Error('Missing required Stripe public key');
-        }
         if (!config.appName || !config.apiKey) {
             throw new Error('Missing required Iaptic configuration');
         }
