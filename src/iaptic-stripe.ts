@@ -377,11 +377,30 @@ export class IapticStripe {
         this.refreshScheduler.clearSchedules();
     }
 
+    private _accessTokenChangeCallbacks: ((accessToken: string) => void)[] = [];
+    public onAccessTokenChange(callback: (accessToken: string) => void): void {
+        this._accessTokenChangeCallbacks.push(callback);
+    }
+    private _notifyAccessTokenChange(accessToken: string): void {
+        this._accessTokenChangeCallbacks.forEach(callback => {
+            try {
+                callback(accessToken);
+            } catch (error) {
+                console.error('Error calling access token change callback:', error);
+            }
+        });
+    }
+
     private _storeAccessToken(accessToken: string): void {
-        try {
-            Utils.storageSetString('iaptic_access_token', accessToken);
-        } catch (error) {
-            console.error('Error storing access token:', error);
+        if (Utils.storageGetString('iaptic_access_token') !== accessToken) {
+            if (accessToken) {
+                this._notifyAccessTokenChange(accessToken);
+            }
+            try {
+                Utils.storageSetString('iaptic_access_token', accessToken);
+            } catch (error) {
+                console.error('Error storing access token:', error);
+            }
         }
     }
 
