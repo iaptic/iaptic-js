@@ -14,11 +14,11 @@ npm install --save iaptic-js
 ### CDN
 ```html
 <!-- UMD version (for direct browser use) -->
-<script src="https://cdn.jsdelivr.net/npm/iaptic-js@1.0.3/dist/iaptic-js.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/iaptic-js@1.0.4/dist/iaptic-js.js"></script>
 
 <!-- ES Module version (for modern browsers) -->
 <script type="module">
-  import { IapticJS } from 'https://cdn.jsdelivr.net/npm/iaptic-js@1.0.3/dist/iaptic-js.esm.js';
+  import { IapticJS } from 'https://cdn.jsdelivr.net/npm/iaptic-js@1.0.4/dist/iaptic-js.esm.js';
 </script>
 ```
 

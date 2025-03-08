@@ -1,6 +1,6 @@
 {
   "name": "iaptic-js",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Iaptic JS integration library for the browser",
   "main": "dist/iaptic-js.js",
   "module": "dist/iaptic-js.esm.js",

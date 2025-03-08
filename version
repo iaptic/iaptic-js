@@ -30,6 +30,13 @@ get_readme_esm_version() {
     grep 'cdn.jsdelivr.net/npm/iaptic-js@' README.md | tail -1 | cut -d'@' -f2 | cut -d'/' -f1
 }
 
+if [ "$1" = "--edit" ]; then
+    echo "Editing files... (current version: $(get_package_version))"
+    read -p "Press Enter to continue..."
+    vim -p package.json package-lock.json src/index.ts CHANGELOG.md README.md
+    exit 0
+fi
+
 # Get versions from all files
 pkg_version=$(get_package_version)
 pkg_lock_version=$(get_package_lock_version)
@@ -45,9 +52,17 @@ if [ "$pkg_version" = "$pkg_lock_version" ] && \
    [ "$pkg_version" = "$readme_umd_version" ] && \
    [ "$pkg_version" = "$readme_esm_version" ]; then
     echo "All versions match: $pkg_version"
+    echo "--------------------------------"
+    echo "package.json: $pkg_version"
+    echo "package-lock.json: $pkg_lock_version"
+    echo "src/index.ts: $index_version"
+    echo "CHANGELOG.md: $changelog_version"
+    echo "README.md (UMD): $readme_umd_version"
+    echo "README.md (ESM): $readme_esm_version"
     exit 0
 else
     echo "Version mismatch detected:"
+    echo "--------------------------------"
     echo "package.json: $pkg_version"
     echo "package-lock.json: $pkg_lock_version"
     echo "src/index.ts: $index_version"
