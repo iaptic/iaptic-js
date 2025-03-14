@@ -2,7 +2,8 @@
 
 ## 1.0.4
 
-- stripePublicKey isn't required
+- Remove stripePublicKey from config (it isn't required)
+- Added onAccessTokenChange()
 
 ## 1.0.3
 

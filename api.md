@@ -134,6 +134,21 @@ Promise resolving to an array of purchases
 
 This method will automatically schedule refresh operations for active subscriptions
 
+##### onAccessTokenChange()
+
+> **onAccessTokenChange**(`callback`): `void`
+
+
+###### Parameters
+
+###### callback
+
+(`accessToken`) => `void`
+
+###### Returns
+
+`void`
+
 ##### order()
 
 > **order**(`params`): `Promise`\<`void`\>
@@ -636,17 +651,6 @@ Optional custom Iaptic URL for private deployments
 ###### Remarks
 
 Only needed if you're using a self-hosted version of Iaptic
-
-##### stripePublicKey
-
-> **stripePublicKey**: `string`
-
-
-Stripe publishable key
-
-###### Remarks
-
-Can be found in your Stripe dashboard
 
 ##### type
 
@@ -1206,7 +1210,7 @@ Utility functions
 
 ##### version
 
-> **version**: `string` = `'1.0.3'`
+> **version**: `string` = `'1.0.4'`
 
 Current version of the IapticJS library
 
