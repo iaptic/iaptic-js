@@ -1,4 +1,4 @@
-const typescript = require('rollup-plugin-typescript2');
+const typescript = require('@rollup/plugin-typescript');
 const pkg = require('./package.json');
 
 module.exports = {
@@ -22,15 +22,12 @@ module.exports = {
   external: [...Object.keys(pkg.peerDependencies || {})],
   plugins: [
     typescript({
-      typescript: require('typescript'),
-      useTsconfigDeclarationDir: true,
-      clean: true,
-      tsconfigOverride: {
-        compilerOptions: {
-          sourceMap: true,
-          declarationMap: true
-        }
-      }
+      tsconfig: './tsconfig.json',
+      sourceMap: true,
+      declaration: true,
+      declarationDir: 'dist/types',
+      declarationMap: true,
+      exclude: ['**/__tests__/**', '**/*.test.ts']
     })
   ]
-}; 
+};
