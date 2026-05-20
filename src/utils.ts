@@ -15,7 +15,7 @@ export class Utils {
     static base64Encode(str: string): string {
         try {
             return btoa(str);
-        } catch (e) {
+        } catch {
             // Fallback for older browsers or non-ASCII characters
             // Use Buffer for Node.js environments
             if (typeof Buffer !== 'undefined') {
@@ -135,7 +135,7 @@ export class Utils {
                 .join('&');
 
             return query ? `${cleanBaseUrl}?${query}` : cleanBaseUrl;
-        } catch (e) {
+        } catch {
             // Fallback is now the same as the main implementation
             const cleanBaseUrl = baseUrl.replace(/\/$/, '');
             
@@ -175,7 +175,7 @@ export class Utils {
                 style: 'currency',
                 currency: currency
             }).format(amount).replace('.00', '');
-        } catch (error) {
+        } catch {
             // Fallback formatting for common currencies
             const amount = amountMicros / 1000000;
             

@@ -20,6 +20,7 @@
       "files": ["src/__tests__/**/*", "**/*.test.ts", "**/*.spec.ts"],
       "rules": {
         "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/no-require-imports": "off",
         "@typescript-eslint/no-namespace": "off",
         "no-var": "off"
       }
