@@ -3,10 +3,10 @@
  * 
  * - subscription: A recurring subscription product
  * - consumable: A product that can be purchased multiple times
- * - non_consumable: A product that can only be purchased once
+ * - non consumable: A product that can only be purchased once
  * - paid subscription: A one-time payment for a subscription
  */
-export type ProductType = 'subscription' | 'consumable' | 'non_consumable' | 'paid subscription';
+export type ProductType = 'subscription' | 'consumable' | 'non consumable' | 'paid subscription';
 
 /**
  * Represents a pricing phase for an offer
