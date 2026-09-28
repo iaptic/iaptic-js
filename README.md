@@ -37,24 +37,22 @@ import { IapticJS } from 'iaptic-js';
 const iaptic = IapticJS.createAdapter({
   type: 'stripe',
   appName: 'my-app',         // Your application identifier
-  apiKey: '1234567890',      // Get from Iaptic dashboard
-  stripePublicKey: 'pk_test_1234567890'
+  apiKey: '1234567890'       // Get from Iaptic dashboard
 });
 
 // Fetch available products
-const { products, subscriptions } = await iaptic.getCatalog();
+const products = await iaptic.getProducts();
 
 // Handle purchase flow
 async function purchaseProduct(productId: string) {
   try {
-    const result = await iaptic.order({
+    // order() redirects the browser to Stripe Checkout on success
+    await iaptic.order({
       offerId: productId,
       applicationUsername: 'user-123',
       successUrl: window.location.href + '/success',
       cancelUrl: window.location.href + '/cancel'
     });
-    
-    console.log('Purchase completed:', result);
   } catch (error) {
     console.error('Payment failed:', error);
   }
