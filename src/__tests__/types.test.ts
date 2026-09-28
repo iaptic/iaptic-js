@@ -1,16 +1,16 @@
 import { ProductType } from '../types';
 
 /**
- * The product types this library can put on `Product.type`.
+ * The product types `iaptic-js` puts on `Product.type`, in the platform's canonical spelling.
  *
- * `GET /v3/stripe/prices` — the only endpoint behind `Product` — returns Stripe's
- * `product.metadata.product_type` cast verbatim
- * (`validator/src/validator/internal/stripe/models.ts:67-68`) and otherwise
- * synthesizes only `'paid subscription'` and `'consumable'`, so these four are the
- * reachable set. The server's own union is wider — `'application'`, `'product'` and
- * `'non renewing subscription'` can only arrive through free-form merchant metadata
- * (`types/src/api/api-types.ts:52-59`); widening this union accordingly is FOV-1408's
- * call, not this test's.
+ * `GET /v3/stripe/prices` — the only endpoint behind `Product` — passes a merchant's
+ * `product.metadata.product_type` through verbatim, cast and unvalidated
+ * (`validator/src/validator/internal/stripe/models.ts:67-68`), and synthesizes a value
+ * only when that metadata is absent: `'paid subscription'` for a recurring first price,
+ * `'consumable'` otherwise (`:69-80`). So the endpoint can emit any of the server's seven
+ * values (`types/src/api/api-types.ts:52-59`) — two of the four below, `'subscription'`
+ * and `'non consumable'`, only ever arrive through that metadata. These four are the ones
+ * the library declares; widening the union to the server's set is FOV-1408, not this test.
  *
  * Note the spelling of the non-consumable value: `'non consumable'`, with a space.
  * That is what the validators branch on
@@ -18,16 +18,16 @@ import { ProductType } from '../types';
  * `validator/src/validator/internal/windows/validator.ts:34`) and what the platform's
  * own clients send (`CdvPurchase.ProductType.NON_CONSUMABLE`).
  *
- * Line references verified against `j3k0/billing@origin/v3` `e62b7598`.
+ * Line references verified against `j3k0/billing@origin/v3` `540a811d`.
  */
-const REACHABLE_PRODUCT_TYPES = ['subscription', 'consumable', 'non consumable', 'paid subscription'] as const;
+const LIBRARY_PRODUCT_TYPES = ['subscription', 'consumable', 'non consumable', 'paid subscription'] as const;
 
 describe('ProductType', () => {
-    it('admits every product type this endpoint can emit', () => {
-        // The check is the assignment: ts-jest fails this suite if the union
-        // stops accepting a value the server can send (FOV-1412).
-        const productTypes: ProductType[] = [...REACHABLE_PRODUCT_TYPES];
-        expect(productTypes).toHaveLength(REACHABLE_PRODUCT_TYPES.length);
+    it('accepts the four values the library declares, in the server spelling', () => {
+        // The check is the assignment: ts-jest fails this suite if the union stops
+        // accepting one of the spellings the library documents (FOV-1412).
+        const productTypes: ProductType[] = [...LIBRARY_PRODUCT_TYPES];
+        expect(productTypes).toHaveLength(LIBRARY_PRODUCT_TYPES.length);
     });
 
     it('rejects the invented non_consumable spelling', () => {
