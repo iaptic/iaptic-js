@@ -1146,7 +1146,7 @@ Type of product that can be purchased:
 - subscription: A recurring subscription product
 - consumable: A product that can be purchased multiple times
 - non consumable: A product that can only be purchased once
-- paid subscription: A one-time payment for a subscription
+- paid subscription: An auto-renewing subscription
 
 ## Variables
 

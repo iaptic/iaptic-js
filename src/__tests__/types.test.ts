@@ -1,23 +1,33 @@
 import { ProductType } from '../types';
 
 /**
- * Product types the server puts on the wire, verbatim from the billing repo's
- * `types/src/api/api-types.ts:52-59` (origin/v3).
+ * The product types this library can put on `Product.type`.
  *
- * Note the spelling of the non-consumable value: `'non consumable'`, with a
- * space. That is what the validators branch on
+ * `GET /v3/stripe/prices` — the only endpoint behind `Product` — returns Stripe's
+ * `product.metadata.product_type` cast verbatim
+ * (`validator/src/validator/internal/stripe/models.ts:67-68`) and otherwise
+ * synthesizes only `'paid subscription'` and `'consumable'`, so these four are the
+ * reachable set. The server's own union is wider — `'application'`, `'product'` and
+ * `'non renewing subscription'` can only arrive through free-form merchant metadata
+ * (`types/src/api/api-types.ts:52-59`); widening this union accordingly is FOV-1408's
+ * call, not this test's.
+ *
+ * Note the spelling of the non-consumable value: `'non consumable'`, with a space.
+ * That is what the validators branch on
  * (`validator/src/validator/internal/apple/validator.ts:163`,
- * `validator/src/validator/internal/windows/validator.ts:34`) and what the
- * platform's own clients send (`CdvPurchase.ProductType.NON_CONSUMABLE`).
+ * `validator/src/validator/internal/windows/validator.ts:34`) and what the platform's
+ * own clients send (`CdvPurchase.ProductType.NON_CONSUMABLE`).
+ *
+ * Line references verified against `j3k0/billing@origin/v3` `e62b7598`.
  */
-const SERVER_PRODUCT_TYPES = ['subscription', 'consumable', 'non consumable', 'paid subscription'] as const;
+const REACHABLE_PRODUCT_TYPES = ['subscription', 'consumable', 'non consumable', 'paid subscription'] as const;
 
 describe('ProductType', () => {
-    it('admits every product type the server emits', () => {
+    it('admits every product type this endpoint can emit', () => {
         // The check is the assignment: ts-jest fails this suite if the union
         // stops accepting a value the server can send (FOV-1412).
-        const productTypes: ProductType[] = [...SERVER_PRODUCT_TYPES];
-        expect(productTypes).toHaveLength(SERVER_PRODUCT_TYPES.length);
+        const productTypes: ProductType[] = [...REACHABLE_PRODUCT_TYPES];
+        expect(productTypes).toHaveLength(REACHABLE_PRODUCT_TYPES.length);
     });
 
     it('rejects the invented non_consumable spelling', () => {
