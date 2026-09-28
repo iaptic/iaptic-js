@@ -130,8 +130,8 @@ export interface Order {
 
 /** Plan change request */
 export interface PlanChange {
-    /** Unique identifier for the purchase to replace (optional, if not provided, the best suited subscription will be used) */
-    purchaseId: string;
+    /** Unique identifier for the purchase to replace. If not provided, the best suited subscription will be used */
+    purchaseId?: string;
     /** New offer to subscribe to */
     offerId: string;
     /** Optional access token for the user */
