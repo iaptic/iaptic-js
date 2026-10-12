@@ -1138,15 +1138,15 @@ Unique identifier for the subscription
 
 ### ProductType
 
-> **ProductType**: `"subscription"` \| `"consumable"` \| `"non_consumable"` \| `"paid subscription"`
+> **ProductType**: `"subscription"` \| `"consumable"` \| `"non consumable"` \| `"paid subscription"`
 
 
 Type of product that can be purchased:
 
 - subscription: A recurring subscription product
 - consumable: A product that can be purchased multiple times
-- non_consumable: A product that can only be purchased once
-- paid subscription: A one-time payment for a subscription
+- non consumable: A product that can only be purchased once
+- paid subscription: An auto-renewing subscription
 
 ## Variables
 
