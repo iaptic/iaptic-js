@@ -102,8 +102,8 @@ export interface Purchase {
     lastRenewalDate: string;
     /** Date of the expiration */
     expirationDate: string;
-    /** Intent of the renewal */
-    renewalIntent: 'Renew' | 'Cancel';
+    /** Intent of the renewal: 'Lapse' to let the subscription expire, 'Renew' to keep it */
+    renewalIntent: 'Lapse' | 'Renew';
     /** Whether the purchase is a trial period */
     isTrialPeriod: boolean;
     /** Price in micros (1/1,000,000 of the currency unit) */

@@ -1071,10 +1071,10 @@ Unique identifier for the purchase
 
 ##### renewalIntent
 
-> **renewalIntent**: `"Renew"` \| `"Cancel"`
+> **renewalIntent**: `"Lapse"` \| `"Renew"`
 
 
-Intent of the renewal
+Intent of the renewal: 'Lapse' to let the subscription expire, 'Renew' to keep it
 
 ##### transactionId
 
