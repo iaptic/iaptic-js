@@ -8,9 +8,7 @@ import { ProductType } from '../types';
  * (`validator/src/validator/internal/stripe/models.ts:67-68`), and synthesizes a value
  * only when that metadata is absent: `'paid subscription'` for a recurring first price,
  * `'consumable'` otherwise (`:69-80`). So the endpoint can emit any of the server's seven
- * values (`types/src/api/api-types.ts:52-59`) — two of the four below, `'subscription'`
- * and `'non consumable'`, only ever arrive through that metadata. These four are the ones
- * the library declares; widening the union to the server's set is FOV-1408, not this test.
+ * values (`types/src/api/api-types.ts:52-59`), and the library declares all seven (FOV-1408).
  *
  * Note the spelling of the non-consumable value: `'non consumable'`, with a space.
  * That is what the validators branch on
@@ -20,19 +18,27 @@ import { ProductType } from '../types';
  *
  * Line references verified against `j3k0/billing@origin/v3` `540a811d`.
  */
-const LIBRARY_PRODUCT_TYPES = ['subscription', 'consumable', 'non consumable', 'paid subscription'] as const;
+const SERVER_PRODUCT_TYPES = [
+    'application',
+    'paid subscription',
+    'subscription',
+    'consumable',
+    'non consumable',
+    'product',
+    'non renewing subscription',
+] as const;
 
 describe('ProductType', () => {
-    it('accepts the four values the library declares, in the server spelling', () => {
+    it('accepts every value the server can emit, in the server spelling', () => {
         // The check is the assignment: ts-jest fails this suite if the union stops
-        // accepting one of the spellings the library documents (FOV-1412).
-        const productTypes: ProductType[] = [...LIBRARY_PRODUCT_TYPES];
-        expect(productTypes).toHaveLength(LIBRARY_PRODUCT_TYPES.length);
+        // accepting one of the server's spellings (FOV-1412, FOV-1408).
+        const productTypes: ProductType[] = [...SERVER_PRODUCT_TYPES];
+        expect(productTypes).toHaveLength(SERVER_PRODUCT_TYPES.length);
     });
 
-    it('rejects the invented non_consumable spelling', () => {
-        // @ts-expect-error 'non_consumable' is not a value the server ever emits (FOV-1412)
-        const invented: ProductType = 'non_consumable';
-        expect(invented).toBe('non_consumable');
+    it('still accepts the deprecated non_consumable spelling until the next major', () => {
+        // Kept so code written against 1.0.4 compiles (FOV-1408). The server never sends it.
+        const deprecated: ProductType = 'non_consumable';
+        expect(deprecated).toBe('non_consumable');
     });
 });

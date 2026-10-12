@@ -5,8 +5,22 @@
  * - consumable: A product that can be purchased multiple times
  * - non consumable: A product that can only be purchased once
  * - paid subscription: An auto-renewing subscription
+ * - non renewing subscription: A subscription that does not auto-renew
+ * - application: The application itself
+ * - product: A generic product
+ *
+ * `'non_consumable'` is deprecated: the server never sends it. It is kept so existing
+ * code compiles, and will be removed in the next major version. Use `'non consumable'`.
  */
-export type ProductType = 'subscription' | 'consumable' | 'non consumable' | 'paid subscription';
+export type ProductType =
+    | 'subscription'
+    | 'consumable'
+    | 'non consumable'
+    | 'paid subscription'
+    | 'non renewing subscription'
+    | 'application'
+    | 'product'
+    | 'non_consumable';
 
 /**
  * Represents a pricing phase for an offer
@@ -18,15 +32,17 @@ export interface PricingPhase {
     /** Price in micros (1/1,000,000 of the currency unit). For example, $1.99 = 1990000 micros */
     priceMicros: number;
     /** ISO 4217 currency code (e.g., 'USD', 'EUR', 'JPY') */
-    currency: string;
+    currency?: string;
     /** 
      * ISO 8601 duration string representing the billing period
      * @example
      * - 'P1M' = 1 month
      * - 'P1Y' = 1 year
      * - 'P7D' = 7 days
+     *
+     * Absent for one-time purchases.
      */
-    billingPeriod: string;
+    billingPeriod?: string;
     /** 
      * Defines how the subscription recurs
      * @remarks
@@ -34,14 +50,18 @@ export interface PricingPhase {
      * - NON_RECURRING: One-time purchase that does not auto-renew
      * - FINITE_RECURRING: Subscription that renews a fixed number of times
      */
-    recurrenceMode: 'INFINITE_RECURRING' | 'NON_RECURRING' | 'FINITE_RECURRING';
+    recurrenceMode?: 'INFINITE_RECURRING' | 'NON_RECURRING' | 'FINITE_RECURRING';
     /**
      * Defines when payment is collected
      * @remarks
      * - PayAsYouGo: Payment collected at the start of each billing period
-     * - PayUpFront: Full payment collected at time of purchase
+     * - UpFront: Full payment collected at time of purchase
+     * - FreeTrial: No payment during this phase
+     *
+     * `'PayUpFront'` is deprecated: the server never sends it. It is kept so existing
+     * code compiles, and will be removed in the next major version. Use `'UpFront'`.
      */
-    paymentMode: 'PayAsYouGo' | 'PayUpFront';
+    paymentMode: 'PayAsYouGo' | 'UpFront' | 'FreeTrial' | 'PayUpFront';
 }
 
 /**
@@ -55,7 +75,7 @@ export interface Offer {
     /** Payment platform identifier (e.g., 'stripe', 'google', 'apple') */
     platform: string;
     /** Type of the offer */
-    offerType: 'Subscription' | 'Default';
+    offerType: 'Subscription' | 'Default' | 'Introductory';
     /** Array of pricing phases that make up this offer's payment schedule */
     pricingPhases: PricingPhase[];
 }
@@ -96,20 +116,20 @@ export interface Purchase {
     productId: string;
     /** Platform identifier (e.g., 'stripe') */
     platform: 'stripe';
-    /** Date of the purchase */
-    purchaseDate: string;
-    /** Date of the last renewal */
-    lastRenewalDate: string;
-    /** Date of the expiration */
-    expirationDate: string;
+    /** Date of the purchase (ISO 8601). Can be absent, check before use. */
+    purchaseDate?: string;
+    /** Date of the last renewal (ISO 8601). Can be absent, check before use. */
+    lastRenewalDate?: string;
+    /** Date of the expiration (ISO 8601). Absent for one-time purchases. */
+    expirationDate?: string;
     /** Intent of the renewal: 'Lapse' to let the subscription expire, 'Renew' to keep it */
-    renewalIntent: 'Lapse' | 'Renew';
+    renewalIntent?: 'Lapse' | 'Renew';
     /** Whether the purchase is a trial period */
-    isTrialPeriod: boolean;
+    isTrialPeriod?: boolean;
     /** Price in micros (1/1,000,000 of the currency unit) */
-    amountMicros: number;
+    amountMicros?: number;
     /** Currency code (e.g., 'USD', 'EUR') */
-    currency: string;
+    currency?: string;
 }
 
 /**

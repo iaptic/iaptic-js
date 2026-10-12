@@ -744,7 +744,7 @@ Unique identifier for the offer in the format 'platform:id'
 
 ##### offerType
 
-> **offerType**: `"Subscription"` \| `"Default"`
+> **offerType**: `"Subscription"` \| `"Default"` \| `"Introductory"`
 
 
 Type of the offer
@@ -883,9 +883,9 @@ For example, a subscription might have an initial trial phase followed by a recu
 
 #### Properties
 
-##### billingPeriod
+##### billingPeriod?
 
-> **billingPeriod**: `string`
+> `optional` **billingPeriod?**: `string`
 
 
 ISO 8601 duration string representing the billing period
@@ -896,18 +896,20 @@ ISO 8601 duration string representing the billing period
 - 'P1M' = 1 month
 - 'P1Y' = 1 year
 - 'P7D' = 7 days
+
+Absent for one-time purchases.
 ```
 
-##### currency
+##### currency?
 
-> **currency**: `string`
+> `optional` **currency?**: `string`
 
 
 ISO 4217 currency code (e.g., 'USD', 'EUR', 'JPY')
 
 ##### paymentMode
 
-> **paymentMode**: `"PayAsYouGo"` \| `"PayUpFront"`
+> **paymentMode**: `"PayAsYouGo"` \| `"UpFront"` \| `"FreeTrial"` \| `"PayUpFront"`
 
 
 Defines when payment is collected
@@ -915,7 +917,11 @@ Defines when payment is collected
 ###### Remarks
 
 - PayAsYouGo: Payment collected at the start of each billing period
-- PayUpFront: Full payment collected at time of purchase
+- UpFront: Full payment collected at time of purchase
+- FreeTrial: No payment during this phase
+
+`'PayUpFront'` is deprecated: the server never sends it. It is kept so existing
+code compiles, and will be removed in the next major version. Use `'UpFront'`.
 
 ##### priceMicros
 
@@ -924,9 +930,9 @@ Defines when payment is collected
 
 Price in micros (1/1,000,000 of the currency unit). For example, $1.99 = 1990000 micros
 
-##### recurrenceMode
+##### recurrenceMode?
 
-> **recurrenceMode**: `"INFINITE_RECURRING"` \| `"NON_RECURRING"` \| `"FINITE_RECURRING"`
+> `optional` **recurrenceMode?**: `"INFINITE_RECURRING"` \| `"NON_RECURRING"` \| `"FINITE_RECURRING"`
 
 
 Defines how the subscription recurs
@@ -1008,40 +1014,40 @@ Represents a purchased product
 
 #### Properties
 
-##### amountMicros
+##### amountMicros?
 
-> **amountMicros**: `number`
+> `optional` **amountMicros?**: `number`
 
 
 Price in micros (1/1,000,000 of the currency unit)
 
-##### currency
+##### currency?
 
-> **currency**: `string`
+> `optional` **currency?**: `string`
 
 
 Currency code (e.g., 'USD', 'EUR')
 
-##### expirationDate
+##### expirationDate?
 
-> **expirationDate**: `string`
+> `optional` **expirationDate?**: `string`
 
 
-Date of the expiration
+Date of the expiration (ISO 8601). Absent for one-time purchases.
 
-##### isTrialPeriod
+##### isTrialPeriod?
 
-> **isTrialPeriod**: `boolean`
+> `optional` **isTrialPeriod?**: `boolean`
 
 
 Whether the purchase is a trial period
 
-##### lastRenewalDate
+##### lastRenewalDate?
 
-> **lastRenewalDate**: `string`
+> `optional` **lastRenewalDate?**: `string`
 
 
-Date of the last renewal
+Date of the last renewal (ISO 8601). Can be absent, check before use.
 
 ##### platform
 
@@ -1057,12 +1063,12 @@ Platform identifier (e.g., 'stripe')
 
 Unique identifier for the product
 
-##### purchaseDate
+##### purchaseDate?
 
-> **purchaseDate**: `string`
+> `optional` **purchaseDate?**: `string`
 
 
-Date of the purchase
+Date of the purchase (ISO 8601). Can be absent, check before use.
 
 ##### purchaseId
 
@@ -1071,9 +1077,9 @@ Date of the purchase
 
 Unique identifier for the purchase
 
-##### renewalIntent
+##### renewalIntent?
 
-> **renewalIntent**: `"Lapse"` \| `"Renew"`
+> `optional` **renewalIntent?**: `"Lapse"` \| `"Renew"`
 
 
 Intent of the renewal: 'Lapse' to let the subscription expire, 'Renew' to keep it
@@ -1140,7 +1146,7 @@ Unique identifier for the subscription
 
 ### ProductType
 
-> **ProductType** = `"subscription"` \| `"consumable"` \| `"non consumable"` \| `"paid subscription"`
+> **ProductType** = `"subscription"` \| `"consumable"` \| `"non consumable"` \| `"paid subscription"` \| `"non renewing subscription"` \| `"application"` \| `"product"` \| `"non_consumable"`
 
 
 Type of product that can be purchased:
@@ -1149,6 +1155,12 @@ Type of product that can be purchased:
 - consumable: A product that can be purchased multiple times
 - non consumable: A product that can only be purchased once
 - paid subscription: An auto-renewing subscription
+- non renewing subscription: A subscription that does not auto-renew
+- application: The application itself
+- product: A generic product
+
+`'non_consumable'` is deprecated: the server never sends it. It is kept so existing
+code compiles, and will be removed in the next major version. Use `'non consumable'`.
 
 ## Variables
 
