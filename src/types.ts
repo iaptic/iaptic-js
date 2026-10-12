@@ -122,8 +122,13 @@ export interface Purchase {
     lastRenewalDate?: string;
     /** Date of the expiration (ISO 8601). Absent for one-time purchases. */
     expirationDate?: string;
-    /** Intent of the renewal: 'Lapse' to let the subscription expire, 'Renew' to keep it */
-    renewalIntent?: 'Lapse' | 'Renew';
+    /**
+     * Intent of the renewal: 'Lapse' to let the subscription expire, 'Renew' to keep it
+     *
+     * `'Cancel'` is deprecated: the server never sends it. It is kept so existing
+     * code compiles, and will be removed in the next major version. Use `'Lapse'`.
+     */
+    renewalIntent?: 'Lapse' | 'Renew' | 'Cancel';
     /** Whether the purchase is a trial period */
     isTrialPeriod?: boolean;
     /** Price in micros (1/1,000,000 of the currency unit) */

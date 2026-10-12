@@ -1079,10 +1079,13 @@ Unique identifier for the purchase
 
 ##### renewalIntent?
 
-> `optional` **renewalIntent?**: `"Lapse"` \| `"Renew"`
+> `optional` **renewalIntent?**: `"Lapse"` \| `"Renew"` \| `"Cancel"`
 
 
 Intent of the renewal: 'Lapse' to let the subscription expire, 'Renew' to keep it
+
+`'Cancel'` is deprecated: the server never sends it. It is kept so existing
+code compiles, and will be removed in the next major version. Use `'Lapse'`.
 
 ##### transactionId
 
