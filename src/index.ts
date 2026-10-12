@@ -34,7 +34,7 @@ export function createAdapter(config: Config) {
  */
 export const IapticJS = {
     /** Current version of the IapticJS library */
-    version: '1.0.5',
+    version: '1.1.0',
     /** Function to create a new Iaptic adapter */
     createAdapter,
     /** Stripe adapter class */

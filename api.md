@@ -1227,7 +1227,7 @@ Utility functions
 
 ##### version
 
-> **version**: `string` = `'1.0.5'`
+> **version**: `string` = `'1.1.0'`
 
 Current version of the IapticJS library
 
