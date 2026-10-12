@@ -828,12 +828,12 @@ Optional access token for the user
 
 New offer to subscribe to
 
-##### purchaseId
+##### purchaseId?
 
-> **purchaseId**: `string`
+> `optional` **purchaseId**: `string`
 
 
-Unique identifier for the purchase to replace (optional, if not provided, the best suited subscription will be used)
+Unique identifier for the purchase to replace. If not provided, the best suited subscription will be used
 
 ***
 
