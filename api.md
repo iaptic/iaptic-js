@@ -18,9 +18,9 @@ checkout sessions, and subscription management.
 
 #### Constructors
 
-##### new IapticStripe()
+##### Constructor
 
-> **new IapticStripe**(`config`): [`IapticStripe`](globals.md#iapticstripe)
+> **new IapticStripe**(`config`): [`IapticStripe`](#iapticstripe)
 
 
 Creates a new IapticStripe instance
@@ -29,13 +29,13 @@ Creates a new IapticStripe instance
 
 ###### config
 
-[`Config`](globals.md#config)
+[`Config`](#config)
 
 Configuration options for the Stripe integration
 
 ###### Returns
 
-[`IapticStripe`](globals.md#iapticstripe)
+[`IapticStripe`](#iapticstripe)
 
 ###### Throws
 
@@ -45,7 +45,7 @@ Error if required configuration is missing
 
 ##### changePlan()
 
-> **changePlan**(`planChange`): `Promise`\<[`Purchase`](globals.md#purchase-1)\>
+> **changePlan**(`planChange`): `Promise`\<[`Purchase`](#purchase-1)\>
 
 
 Changes a subscription plan
@@ -54,13 +54,13 @@ Changes a subscription plan
 
 ###### planChange
 
-[`PlanChange`](globals.md#planchange)
+[`PlanChange`](#planchange)
 
 Plan change parameters
 
 ###### Returns
 
-`Promise`\<[`Purchase`](globals.md#purchase-1)\>
+`Promise`\<[`Purchase`](#purchase-1)\>
 
 Promise resolving to the updated purchase details
 
@@ -81,27 +81,27 @@ Clears all stored data including access tokens and cached products
 
 ##### getAccessToken()
 
-> **getAccessToken**(): `undefined` \| `string`
+> **getAccessToken**(): `string` \| `undefined`
 
 
 Gets the current access token if one exists
 
 ###### Returns
 
-`undefined` \| `string`
+`string` \| `undefined`
 
 The current access token or undefined if none exists
 
 ##### getProducts()
 
-> **getProducts**(): `Promise`\<[`Product`](globals.md#product)[]\>
+> **getProducts**(): `Promise`\<[`Product`](#product)[]\>
 
 
 Gets a list of available products and their pricing
 
 ###### Returns
 
-`Promise`\<[`Product`](globals.md#product)[]\>
+`Promise`\<[`Product`](#product)[]\>
 
 Promise resolving to an array of products
 
@@ -111,7 +111,7 @@ Results are cached locally. Use refreshProducts() to force a fresh fetch.
 
 ##### getPurchases()
 
-> **getPurchases**(`accessToken`?): `Promise`\<[`Purchase`](globals.md#purchase-1)[]\>
+> **getPurchases**(`accessToken?`): `Promise`\<[`Purchase`](#purchase-1)[]\>
 
 
 Gets the customer's purchase history
@@ -126,7 +126,7 @@ Optional access token (uses stored token if not provided)
 
 ###### Returns
 
-`Promise`\<[`Purchase`](globals.md#purchase-1)[]\>
+`Promise`\<[`Purchase`](#purchase-1)[]\>
 
 Promise resolving to an array of purchases
 
@@ -160,7 +160,7 @@ Creates a new order and redirects to Stripe Checkout
 
 ###### params
 
-[`Order`](globals.md#order-1)
+[`Order`](#order-1)
 
 Order parameters including product and URLs
 
@@ -189,11 +189,11 @@ Redirects to Stripe Customer Portal for subscription management
 
 Portal parameters including return URL
 
-###### accessToken
+###### accessToken?
 
 `string`
 
-###### returnUrl
+###### returnUrl?
 
 `string`
 
@@ -211,14 +211,14 @@ This method will redirect the user to Stripe's customer portal on success
 
 ##### refreshProducts()
 
-> **refreshProducts**(): `Promise`\<[`Product`](globals.md#product)[]\>
+> **refreshProducts**(): `Promise`\<[`Product`](#product)[]\>
 
 
 Forces a refresh of the products list from the server
 
 ###### Returns
 
-`Promise`\<[`Product`](globals.md#product)[]\>
+`Promise`\<[`Product`](#product)[]\>
 
 Promise resolving to an array of products
 
@@ -229,26 +229,26 @@ Promise resolving to an array of products
 
 #### Constructors
 
-##### new RefreshScheduler()
+##### Constructor
 
-> **new RefreshScheduler**(`iapticStripe`): [`RefreshScheduler`](globals.md#refreshscheduler)
+> **new RefreshScheduler**(`iapticStripe`): [`RefreshScheduler`](#refreshscheduler)
 
 
 ###### Parameters
 
 ###### iapticStripe
 
-[`IapticStripe`](globals.md#iapticstripe)
+[`IapticStripe`](#iapticstripe)
 
 ###### Returns
 
-[`RefreshScheduler`](globals.md#refreshscheduler)
+[`RefreshScheduler`](#refreshscheduler)
 
 #### Properties
 
 ##### schedules
 
-> **schedules**: [`ScheduledRefresh`](globals.md#scheduledrefresh)[] = `[]`
+> **schedules**: [`ScheduledRefresh`](#scheduledrefresh)[] = `[]`
 
 
 #### Methods
@@ -271,7 +271,7 @@ Promise resolving to an array of products
 
 ###### purchase
 
-[`Purchase`](globals.md#purchase-1)
+[`Purchase`](#purchase-1)
 
 ###### Returns
 
@@ -311,13 +311,13 @@ Utility functions for the Iaptic library
 
 #### Constructors
 
-##### new Utils()
+##### Constructor
 
-> **new Utils**(): [`Utils`](globals.md#utils)
+> **new Utils**(): [`Utils`](#utils)
 
 ###### Returns
 
-[`Utils`](globals.md#utils)
+[`Utils`](#utils)
 
 #### Methods
 
@@ -445,7 +445,7 @@ Utils.formatCurrency(1000000, 'EUR') // Returns "€1"
 
 ##### storageGetJson()
 
-> `static` **storageGetJson**\<`T`\>(`key`): `null` \| `T`
+> `static` **storageGetJson**\<`T`\>(`key`): `T` \| `null`
 
 
 **`Internal`**
@@ -454,7 +454,9 @@ Get and parse a JSON item from localStorage
 
 ###### Type Parameters
 
-• **T**
+###### T
+
+`T`
 
 ###### Parameters
 
@@ -466,13 +468,13 @@ Storage key
 
 ###### Returns
 
-`null` \| `T`
+`T` \| `null`
 
 Parsed value or null if not found/invalid
 
 ##### storageGetString()
 
-> `static` **storageGetString**(`key`): `null` \| `string`
+> `static` **storageGetString**(`key`): `string` \| `null`
 
 
 **`Internal`**
@@ -489,7 +491,7 @@ Storage key
 
 ###### Returns
 
-`null` \| `string`
+`string` \| `null`
 
 String value or null if not found
 
@@ -587,7 +589,7 @@ Response from Iaptic's /stripe/change-plan API
 
 ##### newAccessToken?
 
-> `optional` **newAccessToken**: `string`
+> `optional` **newAccessToken?**: `string`
 
 
 Optional new access token
@@ -601,7 +603,7 @@ Whether the request was successful
 
 ##### purchase
 
-> **purchase**: [`Purchase`](globals.md#purchase-1)
+> **purchase**: [`Purchase`](#purchase-1)
 
 
 Updated purchase details
@@ -643,7 +645,7 @@ This must match exactly what you set up in the Iaptic dashboard
 
 ##### customIapticUrl?
 
-> `optional` **customIapticUrl**: `string`
+> `optional` **customIapticUrl?**: `string`
 
 
 Optional custom Iaptic URL for private deployments
@@ -683,7 +685,7 @@ Whether the request was successful
 
 ##### products
 
-> **products**: [`Product`](globals.md#product)[]
+> **products**: [`Product`](#product)[]
 
 
 Array of available products
@@ -701,7 +703,7 @@ Response from Iaptic's /stripe/purchases API
 
 ##### newAccessToken?
 
-> `optional` **newAccessToken**: `string`
+> `optional` **newAccessToken?**: `string`
 
 
 Optional new access token
@@ -715,7 +717,7 @@ Whether the request was successful
 
 ##### purchases
 
-> **purchases**: [`Purchase`](globals.md#purchase-1)[]
+> **purchases**: [`Purchase`](#purchase-1)[]
 
 
 Array of customer's purchases
@@ -756,7 +758,7 @@ Payment platform identifier (e.g., 'stripe', 'google', 'apple')
 
 ##### pricingPhases
 
-> **pricingPhases**: [`PricingPhase`](globals.md#pricingphase)[]
+> **pricingPhases**: [`PricingPhase`](#pricingphase)[]
 
 
 Array of pricing phases that make up this offer's payment schedule
@@ -772,7 +774,7 @@ Represents an order for a product
 
 ##### accessToken?
 
-> `optional` **accessToken**: `string`
+> `optional` **accessToken?**: `string`
 
 
 Optional access token for the user
@@ -816,7 +818,7 @@ Plan change request
 
 ##### accessToken?
 
-> `optional` **accessToken**: `string`
+> `optional` **accessToken?**: `string`
 
 
 Optional access token for the user
@@ -830,7 +832,7 @@ New offer to subscribe to
 
 ##### purchaseId?
 
-> `optional` **purchaseId**: `string`
+> `optional` **purchaseId?**: `string`
 
 
 Unique identifier for the purchase to replace. If not provided, the best suited subscription will be used
@@ -946,7 +948,7 @@ Represents a product that can be purchased
 
 ##### description?
 
-> `optional` **description**: `string`
+> `optional` **description?**: `string`
 
 
 Optional detailed description of the product
@@ -960,7 +962,7 @@ Unique identifier for the product
 
 ##### metadata?
 
-> `optional` **metadata**: `Record`\<`string`, `any`\>
+> `optional` **metadata?**: `Record`\<`string`, `any`\>
 
 
 Optional additional data associated with the product
@@ -971,14 +973,14 @@ This can be used to store custom data needed by your application
 
 ##### offers
 
-> **offers**: [`Offer`](globals.md#offer)[]
+> **offers**: [`Offer`](#offer)[]
 
 
 Available purchase offers for this product
 
 ##### platform?
 
-> `optional` **platform**: `string`
+> `optional` **platform?**: `string`
 
 
 Optional platform identifier (e.g., 'stripe')
@@ -992,7 +994,7 @@ Display name of the product shown to customers
 
 ##### type
 
-> **type**: [`ProductType`](globals.md#producttype)
+> **type**: [`ProductType`](#producttype-1)
 
 
 Type of the product (subscription, consumable, etc.)
@@ -1138,7 +1140,7 @@ Unique identifier for the subscription
 
 ### ProductType
 
-> **ProductType**: `"subscription"` \| `"consumable"` \| `"non consumable"` \| `"paid subscription"`
+> **ProductType** = `"subscription"` \| `"consumable"` \| `"non consumable"` \| `"paid subscription"`
 
 
 Type of product that can be purchased:
@@ -1157,11 +1159,11 @@ Type of product that can be purchased:
 
 Main entry point for the Iaptic library
 
-#### Type declaration
+#### Type Declaration
 
-##### createAdapter()
+##### createAdapter
 
-> **createAdapter**: (`config`) => [`IapticStripe`](globals.md#iapticstripe)
+> **createAdapter**: (`config`) => [`IapticStripe`](#iapticstripe)
 
 Function to create a new Iaptic adapter
 
@@ -1171,13 +1173,13 @@ Creates an Iaptic adapter for the specified payment platform
 
 ###### config
 
-[`Config`](globals.md#config)
+[`Config`](#config)
 
 Configuration options for the adapter
 
 ###### Returns
 
-[`IapticStripe`](globals.md#iapticstripe)
+[`IapticStripe`](#iapticstripe)
 
 An initialized adapter instance
 
@@ -1198,13 +1200,13 @@ const iaptic = createAdapter({
 
 ##### IapticStripe
 
-> **IapticStripe**: *typeof* [`IapticStripe`](globals.md#iapticstripe)
+> **IapticStripe**: *typeof* [`IapticStripe`](#iapticstripe)
 
 Stripe adapter class
 
 ##### Utils
 
-> **Utils**: *typeof* [`Utils`](globals.md#utils)
+> **Utils**: *typeof* [`Utils`](#utils)
 
 Utility functions
 
@@ -1218,7 +1220,7 @@ Current version of the IapticJS library
 
 ### createAdapter()
 
-> **createAdapter**(`config`): [`IapticStripe`](globals.md#iapticstripe)
+> **createAdapter**(`config`): [`IapticStripe`](#iapticstripe)
 
 
 Creates an Iaptic adapter for the specified payment platform
@@ -1227,13 +1229,13 @@ Creates an Iaptic adapter for the specified payment platform
 
 ##### config
 
-[`Config`](globals.md#config)
+[`Config`](#config)
 
 Configuration options for the adapter
 
 #### Returns
 
-[`IapticStripe`](globals.md#iapticstripe)
+[`IapticStripe`](#iapticstripe)
 
 An initialized adapter instance
 
