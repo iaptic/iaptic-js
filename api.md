@@ -1208,8 +1208,7 @@ Error if the specified adapter type is not supported
 const iaptic = createAdapter({
   type: 'stripe',
   appName: 'my-app',
-  apiKey: '1234567890',
-  stripePublicKey: 'pk_test_...'
+  apiKey: '1234567890'
 });
 ```
 
@@ -1264,7 +1263,6 @@ Error if the specified adapter type is not supported
 const iaptic = createAdapter({
   type: 'stripe',
   appName: 'my-app',
-  apiKey: '1234567890',
-  stripePublicKey: 'pk_test_...'
+  apiKey: '1234567890'
 });
 ```
