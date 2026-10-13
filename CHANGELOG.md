@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1
+
+- Docs: fix README quick start (`getProducts()`, no `stripePublicKey`); `getCatalog()` never existed
+
 ## 1.1.0
 
 Type fixes so the declarations match what the server sends. Values the server never sends are kept as `@deprecated` so 1.0.4 code still compiles; they will be removed in the next major.
