@@ -1,12 +1,8 @@
 # Changelog
 
-## 1.1.1
+## 2.0.0
 
-- Docs: fix README quick start (`getProducts()`, no `stripePublicKey`); `getCatalog()` never existed
-
-## 1.1.0
-
-Type fixes so the declarations match what the server sends. Values the server never sends are kept as `@deprecated` so 1.0.4 code still compiles; they will be removed in the next major.
+Fixes the README quick start (`getProducts()`, no `stripePublicKey`; `getCatalog()` never existed) and makes the type declarations match what the server sends. Values the server never sends are kept as `@deprecated` so 1.0.4 code still compiles; they will be removed in the next major.
 
 - Fix types: `PricingPhase.paymentMode` adds `'UpFront'` and `'FreeTrial'`. `'PayUpFront'` is deprecated (never sent)
 - Fix types: `Offer.offerType` adds `'Introductory'`
